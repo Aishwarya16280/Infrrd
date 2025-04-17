@@ -1,0 +1,54 @@
+<!-- Employee List -->
+<div>
+    <div class="head_new">
+        <div class="head_title">Employee List</div>
+        <button (click)="openModal()" class="add_btn"> + Add New Employee</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+            <th></th> 
+          <th>Name</th>
+          <th>Company</th>
+          <th>Email</th>
+          <th>Contact</th>
+          <th>Designation</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees">
+            <td>
+                <img [src]="employee.avatar" width="40" height="40" alt="avatar" style="border-radius: 50%;" />
+              </td>
+          <td data-label="Name">{{ employee.name }}</td>
+          <td data-label="Company">{{ employee.company }}</td>
+          <td data-label="Email">{{ employee.email }}</td>
+          <td data-label="Contact No.">{{ employee.contact }}</td>
+          <td data-label="Designation">{{ employee.designation }}</td>
+          <td>
+            <button (click)="openModal(employee)">Edit</button> <span>&nbsp;</span>
+            <button (click)="deleteEmployee(employee.id)" type="button">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <div *ngIf="showModal" class="modal">
+    <div class="modal-content">
+      <h3>{{ selectedEmployee?.id ? 'Edit' : 'Add' }} Employee</h3>
+      <form (ngSubmit)="saveEmployee()" #empForm="ngForm">
+        <input type="text" [(ngModel)]="selectedEmployee.name" name="name" placeholder="Name" required>
+        <input type="text" [(ngModel)]="selectedEmployee.company" name="company" placeholder="Company" required>
+        <input type="email" [(ngModel)]="selectedEmployee.email" name="email" placeholder="Email" required>
+        <input type="text" [(ngModel)]="selectedEmployee.contact" name="contact" placeholder="Contact No." required>
+        <input type="text" [(ngModel)]="selectedEmployee.designation" name="designation" placeholder="Designation" required>
+        
+        <div style="margin-top: 10px;">
+          <button type="submit">{{ selectedEmployee?.id ? 'Update' : 'Add' }}</button>
+          <button type="button" (click)="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
